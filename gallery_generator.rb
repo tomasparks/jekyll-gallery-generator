@@ -6,7 +6,8 @@ module Jekyll
 			@base = base
 			@dir = dir
 			@name = name # Name of the generated page
-
+			puts "inside ImagePage @site #{@site} @base #{@base} @dir #{@dir} @name #{@name}"
+			
 			self.process(@name)
 			self.read_yaml(File.join(@base, '_layouts'), 'image_page.html')
 			self.data['title'] = "#{File.basename(img_source)}"
@@ -14,6 +15,7 @@ module Jekyll
 			self.data['prev_url'] = prev_name
 			self.data['next_url'] = next_name
 			self.data['album_url'] = album_page
+		    puts "inside ImagePage @self.data #{self.data}"
 		end
 	end
 
@@ -46,7 +48,7 @@ module Jekyll
 			self.data['albums'] = []
 			self.data['description'] = @album_metadata['description']
 			self.data['hidden'] = true if @album_metadata['hidden']
-			puts "inside AlbumPage @self #{@self}"
+			puts "inside AlbumPage @self.data #{self.data}"
 			
 			files, directories = list_album_contents
 
@@ -138,6 +140,7 @@ module Jekyll
 			self.data['images'] << image_data
 
 			# Create image page
+			puts "send to ImagePage(#{@site}, #{@base}, #{@dir}, #{img_source},#{rel_link},)"
 			site.pages << ImagePage.new(@site, @base, @dir, img_source,
 				rel_link, image_page_url(prev_file), image_page_url(next_file), album_page)
 		end
