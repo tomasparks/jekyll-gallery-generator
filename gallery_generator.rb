@@ -26,15 +26,13 @@ module Jekyll
 		}
 
 		def initialize(site, base, dir, page=0)
-			print "inside AlbumPage"
+			puts "inside AlbumPage"
 			@site = site
-			print @site."\n"
 			@base = base # Absolute path to use to find files for generation
-            print @base."\n"
 			# Page will be created at www.mysite.com/#{dir}/#{name}
 			@dir = dir
-			print @dir."\n"
 			@name = album_name_from_page(page)
+			puts " #{@site} #{@base} #{@dir} #{@name}"
 
 			@album_source = File.join(site.config['album_dir'] || 'albums', @dir)
 			@album_metadata = get_album_metadata
