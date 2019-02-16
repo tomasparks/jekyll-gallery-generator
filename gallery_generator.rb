@@ -2,12 +2,12 @@ module Jekyll
 	class ImagePage < Page
 		# An image page
 		def initialize(site, base, dir, img_source, name, prev_name, next_name, album_page)
-			puts "inside ImagePage @site #{@site} @base #{@base} @dir #{@dir} #{img_source}, #{name}, #{prev_name}, #{next_name}, #{album_page}"		
+			Jekyll.logger.info "inside ImagePage @site #{@site} @base #{@base} @dir #{@dir} #{img_source}, #{name}, #{prev_name}, #{next_name}, #{album_page}"		
 			@site = site
 			@base = base
 			@dir = dir
 			@name = name # Name of the generated page
-			puts "inside ImagePage @site #{@site} @base #{@base} @dir #{@dir} @name #{@name}"
+			Jekyll.logger.info "inside ImagePage @site #{@site} @base #{@base} @dir #{@dir} @name #{@name}"
 			
 			self.process(@name)
 			self.read_yaml(File.join(@base, '_layouts'), 'image_page.html')
@@ -16,7 +16,7 @@ module Jekyll
 			self.data['prev_url'] = prev_name
 			self.data['next_url'] = next_name
 			self.data['album_url'] = album_page
-		    puts "inside ImagePage @self.data #{self.data}"
+		    Jekyll.logger.info "inside ImagePage @self.data #{self.data}"
 		end
 	end
 
@@ -34,11 +34,11 @@ module Jekyll
 			# Page will be created at www.mysite.com/#{dir}/#{name}
 			@dir = dir
 			@name = album_name_from_page(page)
-			puts "inside AlbumPage @site #{@site} @base #{@base} @dir #{@dir} @name #{@name}"
+			Jekyll.logger.info "inside AlbumPage.initialize @site #{@site} @base #{@base} @dir #{@dir} @name #{@name}"
 
 			@album_source = File.join(site.config['album_dir'] || 'albums', @dir)
 			@album_metadata = get_album_metadata
-			puts "inside AlbumPage @album_source #{@album_source} @album_metadata #{@album_metadata}"
+			Jekyll.logger.info "inside AlbumPage.initialize @album_source #{@album_source} @album_metadata #{@album_metadata}"
 			
 			self.process(@name)
 			self.read_yaml(File.join(@base, '_layouts'), 'album_index.html')
@@ -49,10 +49,10 @@ module Jekyll
 			self.data['description'] = @album_metadata['description']
 			self.data['hidden'] = true if @album_metadata['hidden']
 			self.data['album_source'] = @album_source
-			puts "inside AlbumPage @self.data #{self.data}"
+			Jekyll.logger.info "inside AlbumPage.initialize @self.data #{self.data}"
 			
 			files, directories = list_album_contents
-
+            Jekyll.logger.info "#{files}, #{directories}"
 			#Pagination
 			num_images = @album_metadata['paginate']
 			if num_images
@@ -64,7 +64,7 @@ module Jekyll
 
 			if page == 0
 				directories.each do |subalbum|
-				    puts "**send to AlbumPage(#{@site}, #{site.source}, #{File.join(@dir, subalbum)})**"
+				    Jekyll.logger.info "inside AlbumPage.initialize **send to AlbumPage(#{@site}, #{site.source}, #{File.join(@dir, subalbum)})**"
 					albumpage = AlbumPage.new(site, site.source, File.join(@dir, subalbum))
 					if !albumpage.data['hidden']
 						self.data['albums'] << { 'name' => subalbum, 'url' => albumpage.url }
@@ -77,7 +77,7 @@ module Jekyll
 				if num_images
 					next if idx < first
 					if idx >= last
-					puts "**send to AlbumPage(#{@site}, #{base}, #{dir}, #{page+1})**"
+					Jekyll.logger.info "inside AlbumPage.initialize **send to AlbumPage(#{@site}, #{base}, #{dir}, #{page+1})**"
 						site.pages << AlbumPage.new(site, base, dir, page + 1)
 						break
 					end
@@ -86,7 +86,7 @@ module Jekyll
 				next_file = "#{@album_source}/#{files[idx+1]}" || nil
 
 				album_page = "#{@dir}/#{album_name_from_page(page)}"
-				puts "**send to do_image(#{filename}, #{prev_file}, #{next_file}, #{album_page})**"
+				Jekyll.logger.info "inside AlbumPage **send to do_image(#{filename}, #{prev_file}, #{next_file}, #{album_page})**"
 				do_image(filename, prev_file, next_file, album_page)
 			end
 		end
@@ -100,7 +100,7 @@ module Jekyll
 					local_config = YAML.load_file(config_file)
 				end
 			end
-			puts "inside get_album_metadata **Returning (#{DEFAULT_METADATA.merge(site_metadata).merge(local_config)})**"
+			Jekyll.logger.info "inside get_album_metadata **Returning (#{DEFAULT_METADATA.merge(site_metadata).merge(local_config)})**"
 			return DEFAULT_METADATA.merge(site_metadata).merge(local_config)
 		end
 
@@ -145,8 +145,8 @@ module Jekyll
 			self.data['images'] << image_data
 
 			# Create image page
-			puts "**send to ImagePage(#{@site}, #{@base}, #{@dir}, #{img_source},#{rel_link},#{image_page_url(prev_file)}, #{image_page_url(next_file)}, #{album_page})**"
-			puts
+			Jekyll.logger.info "**send to ImagePage(#{@site}, #{@base}, #{@dir}, #{img_source},#{rel_link},#{image_page_url(prev_file)}, #{image_page_url(next_file)}, #{album_page})**"
+			Jekyll.logger.info
 			site.pages << ImagePage.new(@site, @base, @dir, img_source,
 				rel_link, "#{@album_source}/#{image_page_url(prev_file)}", "#{@album_source}/#{image_page_url(next_file)}", album_page)
 		end
@@ -154,7 +154,7 @@ module Jekyll
 		def image_page_url(filename)
 			return nil if filename == nil
 			ext = File.extname(filename)
-			puts "inside image_page_url **Returning (#{File.basename(filename, ext)}_#{File.extname(filename)[1..-1]}.html)**"
+			Jekyll.logger.info "inside image_page_url **Returning (#{File.basename(filename, ext)}_#{File.extname(filename)[1..-1]}.html)**"
 			return "#{File.basename(filename, ext)}_#{File.extname(filename)[1..-1]}.html"
 		end
 	end
@@ -169,8 +169,8 @@ module Jekyll
 				albums.reject! { |x| x =~ /^\./ }
 				albums.select! { |x| File.directory? File.join(base_album_path, x) }
 				albums.each do |album|
-			        puts "**send to AlbumPage(#{@site}, #{site.source}, #{album})**"
-			        puts
+			        Jekyll.logger.info "**send to AlbumPage(#{@site}, #{site.source}, #{album})**"
+			        Jekyll.logger.info
 					site.pages << AlbumPage.new(site, site.source, album)
 				end
 			end
