@@ -32,11 +32,12 @@ module Jekyll
 			# Page will be created at www.mysite.com/#{dir}/#{name}
 			@dir = dir
 			@name = album_name_from_page(page)
-			puts " @site #{@site} @base #{@base} @dir #{@dir} @name #{@name}"
+			puts "inside AlbumPage @site #{@site} @base #{@base} @dir #{@dir} @name #{@name}"
 
 			@album_source = File.join(site.config['album_dir'] || 'albums', @dir)
 			@album_metadata = get_album_metadata
-
+			puts "inside AlbumPage @album_source #{@album_source} @album_metadata #{@album_metadata}"
+			
 			self.process(@name)
 			self.read_yaml(File.join(@base, '_layouts'), 'album_index.html')
 
