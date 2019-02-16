@@ -18,7 +18,6 @@ module Jekyll
 	end
 
 	class AlbumPage < Page
-	    print "inside AlbumPage"
 		# An album page
 
 		DEFAULT_METADATA = {
@@ -27,12 +26,14 @@ module Jekyll
 		}
 
 		def initialize(site, base, dir, page=0)
+			print "inside AlbumPage"
 			@site = site
-			print @site
+			print @site."\n"
 			@base = base # Absolute path to use to find files for generation
-            print @base
+            print @base."\n"
 			# Page will be created at www.mysite.com/#{dir}/#{name}
 			@dir = dir
+			print @dir."\n"
 			@name = album_name_from_page(page)
 
 			@album_source = File.join(site.config['album_dir'] || 'albums', @dir)
