@@ -6,7 +6,7 @@ module Jekyll
 			puts "inside ImagePage site:#{site} base:#{base} @dir:#{dir} image_source:#{img_source}, name:#{name}, prev_name:#{prev_name}, next_name:#{next_name}, album_page:#{album_page}"		
 			@site = site
 			@base = base
-			@dir = dir
+			@dir =  dir
 			@name = name # Name of the generated page
 			puts "inside ImagePage @site:#{@site} @base:#{@base} @dir:#{@dir} @name:#{@name}"
 			
@@ -52,6 +52,7 @@ module Jekyll
 			self.data['description'] = @album_metadata['description']
 			self.data['hidden'] = true if @album_metadata['hidden']
 			self.data['album_source'] = @album_source
+			@dir = File.join(site.config['album_dir'] || 'albums', dir)
 			puts "inside AlbumPage.initialize @self.data:#{self.data}"
 			
 			files, directories = list_album_contents
@@ -68,7 +69,7 @@ module Jekyll
 			if page == 0
 				directories.each do |subalbum|
 				    puts "inside AlbumPage.initialize **send to AlbumPage(site:#{site}, site.source:#{site.source}, dir:#{File.join(@dir, subalbum)})**"
-					albumpage = AlbumPage.new(site, site.source, File.join(@dir, subalbum))
+					albumpage = AlbumPage.new(site, site.source, File.join(dir, subalbum))
 					if !albumpage.data['hidden']
 						self.data['albums'] << { 'name' => subalbum, 'url' => albumpage.url }
 					end
