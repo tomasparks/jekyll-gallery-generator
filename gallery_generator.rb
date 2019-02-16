@@ -3,12 +3,12 @@ module Jekyll
 		# An image page
 		def initialize(site, base, dir, img_source, name, prev_name, next_name, album_page)
 		    puts "/////////////////////////////////ImagePage.initialize/////////////////////////////////////////////////////"
-			puts "inside ImagePage site:#{site} base:#{@base} @dir:#{dir} image_source:#{img_source}, name:#{name}, prev_name:#{prev_name}, next_name:#{next_name}, album_page:#{album_page}"		
+			puts "inside ImagePage site:#{site} base:#{base} @dir:#{dir} image_source:#{img_source}, name:#{name}, prev_name:#{prev_name}, next_name:#{next_name}, album_page:#{album_page}"		
 			@site = site
 			@base = base
 			@dir = dir
 			@name = name # Name of the generated page
-			puts "inside ImagePage @site #{@site} @base #{@base} @dir #{@dir} @name #{@name}"
+			puts "inside ImagePage @site:#{@site} @base:#{@base} @dir:#{@dir} @name:#{@name}"
 			
 			self.process(@name)
 			self.read_yaml(File.join(@base, '_layouts'), 'image_page.html')
@@ -17,7 +17,7 @@ module Jekyll
 			self.data['prev_url'] = prev_name
 			self.data['next_url'] = next_name
 			self.data['album_url'] = album_page
-		    puts "inside ImagePage @self.data:#{self.data}"
+		    puts "inside ImagePage self.data:#{self.data}"
 		end
 	end
 
@@ -67,12 +67,12 @@ module Jekyll
 
 			if page == 0
 				directories.each do |subalbum|
-				   # puts "inside AlbumPage.initialize **send to AlbumPage(site:#{site}, site.source:#{site.source}, dir:#{File.join(@dir, subalbum)})**"
-				#	albumpage = AlbumPage.new(site, site.source, File.join(@dir, subalbum))
-				#	if !albumpage.data['hidden']
-				#		self.data['albums'] << { 'name' => subalbum, 'url' => albumpage.url }
-				#	end
-				#	site.pages << albumpage #FIXME: sub albums are getting included in my gallery index
+				    puts "inside AlbumPage.initialize **send to AlbumPage(site:#{site}, site.source:#{site.source}, dir:#{File.join(@dir, subalbum)})**"
+					albumpage = AlbumPage.new(site, site.source, File.join(@dir, subalbum))
+					if !albumpage.data['hidden']
+						self.data['albums'] << { 'name' => subalbum, 'url' => albumpage.url }
+					end
+					site.pages << albumpage #FIXME: sub albums are getting included in my gallery index
 				end
 			end
 
@@ -80,7 +80,7 @@ module Jekyll
 				if num_images
 					next if idx < first
 					if idx >= last
-					puts "inside AlbumPage.initialize **send to AlbumPage(site:#{site}, base:#{base}, dir:#{dir}, page:#{page+1})**"
+					    puts "inside AlbumPage.initialize **send to AlbumPage(site:#{site}, base:#{base}, dir:#{dir}, page:#{page+1})**"
 						site.pages << AlbumPage.new(site, base, dir, page + 1)
 						break
 					end
@@ -94,9 +94,9 @@ module Jekyll
 			end
 		puts "\\\\\\\\\\\\\\\\\\\\\\\\\\AlbumPage.initialize///////////////////"	
 		end
-
+#-------------------------------------------------------------------------------------------
 		def get_album_metadata
-		    puts "///////////////AlbumPage.get_album_metadata//////////////////"
+		    puts "-----------------------AlbumPage.get_album_metadata------------------"
 			site_metadata = @site.config['album_config'] || {}
 			local_config = {}
 			['yml', 'yaml'].each do |ext|
@@ -107,13 +107,17 @@ module Jekyll
 			end
 			puts "inside AlbumPage.get_album_metadata **Returning (#{DEFAULT_METADATA.merge(site_metadata).merge(local_config)})**"
 			return DEFAULT_METADATA.merge(site_metadata).merge(local_config)
-		end
 
+		end
+#-------------------------------------------------------------------------------------------
 		def album_name_from_page(page)
+		    puts "-----------------------AlbumPage.album_name_from_page(#{page})------------------"
+		    puts "inside AlbumPage.get_album_metadata **Returning (#{page == 0 ? 'index.html' : "index#{page + 1}.html"})**"
 			return page == 0 ? 'index.html' : "index#{page + 1}.html"
 		end
-
+#-------------------------------------------------------------------------------------------
 		def list_album_contents
+		    puts "-----------------------AlbumPage.list_album_contents------------------"
 			entries = Dir.entries(@album_source)
 			entries.reject! { |x| x =~ /^\./ } # Filter out ., .., and dotfiles
 
@@ -124,6 +128,7 @@ module Jekyll
 
 			# Sort images
 			def filename_sort(a, b, reverse)
+				puts "-----------------------AlbumPage.filename_sort(a, b, reverse)------------------"
 				if reverse =~ /^desc/
 					return b <=> a
 				end
@@ -137,6 +142,7 @@ module Jekyll
 		end
 
 		def do_image(filename, prev_file, next_file, album_page)
+		     puts "-----------------------AlbumPage.do_image(#{filename}, #{prev_file}, #{next_file}, #{album_page})------------------"
 			# Get info for the album page and make the image's page.
 
 			rel_link = image_page_url(filename)
@@ -157,6 +163,7 @@ module Jekyll
 		end
 
 		def image_page_url(filename)
+			puts "-----------------------AlbumPage.image_page_url(filename)------------------"
 			return nil if filename == nil
 			ext = File.extname(filename)
 			puts "inside image_page_url **Returning (#{File.basename(filename, ext)}_#{File.extname(filename)[1..-1]}.html)**"
