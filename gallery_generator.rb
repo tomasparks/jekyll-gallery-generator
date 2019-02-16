@@ -46,7 +46,8 @@ module Jekyll
 			self.data['albums'] = []
 			self.data['description'] = @album_metadata['description']
 			self.data['hidden'] = true if @album_metadata['hidden']
-
+			puts "inside AlbumPage @self #{@self}"
+			
 			files, directories = list_album_contents
 
 			#Pagination
