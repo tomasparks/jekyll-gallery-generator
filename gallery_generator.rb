@@ -18,6 +18,7 @@ module Jekyll
 	end
 
 	class AlbumPage < Page
+	    put "inside AlbumPage"
 		# An album page
 
 		DEFAULT_METADATA = {
@@ -27,8 +28,9 @@ module Jekyll
 
 		def initialize(site, base, dir, page=0)
 			@site = site
+			put @site
 			@base = base # Absolute path to use to find files for generation
-
+            put @base
 			# Page will be created at www.mysite.com/#{dir}/#{name}
 			@dir = dir
 			@name = album_name_from_page(page)
