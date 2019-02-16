@@ -82,8 +82,8 @@ module Jekyll
 						break
 					end
 				end
-				prev_file = files[idx-1] unless idx == 0
-				next_file = files[idx+1] || nil
+				prev_file = "#{@album_source}/#{files[idx-1]}" unless idx == 0
+				next_file = "#{@album_source}/#{files[idx+1]}" || nil
 
 				album_page = "#{@dir}/#{album_name_from_page(page)}"
 				puts "**send to do_image(#{filename}, #{prev_file}, #{next_file}, #{album_page})**"
