@@ -140,7 +140,8 @@ module Jekyll
 			self.data['images'] << image_data
 
 			# Create image page
-			puts "send to ImagePage(#{@site}, #{@base}, #{@dir}, #{img_source},#{rel_link},)"
+			puts "send to ImagePage(#{@site}, #{@base}, #{@dir}, #{img_source},#{rel_link},#{image_page_url(prev_file)}, #{image_page_url(next_file)}, #{album_page})"
+			puts
 			site.pages << ImagePage.new(@site, @base, @dir, img_source,
 				rel_link, image_page_url(prev_file), image_page_url(next_file), album_page)
 		end
@@ -162,6 +163,8 @@ module Jekyll
 				albums.reject! { |x| x =~ /^\./ }
 				albums.select! { |x| File.directory? File.join(base_album_path, x) }
 				albums.each do |album|
+			        puts "send to AlbumPage(#{@site}, #{site.source}, #{album})"
+			        puts
 					site.pages << AlbumPage.new(site, site.source, album)
 				end
 			end
