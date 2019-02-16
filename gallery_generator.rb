@@ -29,7 +29,7 @@ module Jekyll
 		}
 
 		def initialize(site, base, dir, page=0)
-		    puts "//////////////////////////////////////////////////////////////////////////////////////"
+		    puts "/////////////////////////////////AlbumPage.initialize/////////////////////////////////////////////////////"
 			puts "inside AlbumPage.initialize recved (site:#{site} base:#{base} dir:#{dir} page:#{page})"
 			@site = site
 			@base = base # Absolute path to use to find files for generation
@@ -94,6 +94,7 @@ module Jekyll
 		end
 
 		def get_album_metadata
+		    puts "///////////////AlbumPage.get_album_metadata//////////////////"
 			site_metadata = @site.config['album_config'] || {}
 			local_config = {}
 			['yml', 'yaml'].each do |ext|
