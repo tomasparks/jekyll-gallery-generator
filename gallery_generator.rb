@@ -29,6 +29,7 @@ module Jekyll
 		}
 
 		def initialize(site, base, dir, page=0)
+		    puts "//////////////////////////////////////////////////////////////////////////////////////"
 			puts "inside AlbumPage.initialize recved (site:#{site} base:#{base} dir:#{dir} page:#{page})"
 			@site = site
 			@base = base # Absolute path to use to find files for generation
@@ -53,7 +54,7 @@ module Jekyll
 			puts "inside AlbumPage.initialize @self.data:#{self.data}"
 			
 			files, directories = list_album_contents
-            puts "#{files}, #{directories}"
+            puts "inside AlbumPage.initialize files:#{files}, directories:#{directories}"
 			#Pagination
 			num_images = @album_metadata['paginate']
 			if num_images
@@ -164,16 +165,17 @@ module Jekyll
 		safe true
 
 		def generate(site)
-		    puts "inside generate (#{@site})"
+		    puts "inside generate (#{site})"
 			if site.layouts.key? 'album_index'
 				base_album_path = site.config['album_dir'] || 'albums'
 				albums = Dir.entries(base_album_path)
 				albums.reject! { |x| x =~ /^\./ }
 				albums.select! { |x| File.directory? File.join(base_album_path, x) }
 				albums.each do |album|
-			        puts "inside generate **send to AlbumPage(#{@site}, #{site.source}, #{album})**"
-			        puts
+			        puts "inside generate **send to AlbumPage(#{site}, #{site.source}, #{album})**"
+			        puts "-----------------------------------------------------------------------"
 					site.pages << AlbumPage.new(site, site.source, album)
+                    puts "-----------------------------------------------------------------------"
 				end
 			end
 		end
