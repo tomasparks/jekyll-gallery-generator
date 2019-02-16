@@ -2,6 +2,7 @@ module Jekyll
 	class ImagePage < Page
 		# An image page
 		def initialize(site, base, dir, img_source, name, prev_name, next_name, album_page)
+			puts "inside ImagePage @site #{@site} @base #{@base} @dir #{@dir} #{img_source}, #{name}, #{prev_name}, #{next_name}, #{album_page}"		
 			@site = site
 			@base = base
 			@dir = dir
@@ -147,7 +148,7 @@ module Jekyll
 			puts "**send to ImagePage(#{@site}, #{@base}, #{@dir}, #{img_source},#{rel_link},#{image_page_url(prev_file)}, #{image_page_url(next_file)}, #{album_page})**"
 			puts
 			site.pages << ImagePage.new(@site, @base, @dir, img_source,
-				rel_link, image_page_url(prev_file), image_page_url(next_file), album_page)
+				rel_link, "#{@album_source}/#{image_page_url(prev_file)}", "#{@album_source}/#{image_page_url(next_file)}", album_page)
 		end
 
 		def image_page_url(filename)
