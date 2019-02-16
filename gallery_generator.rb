@@ -100,7 +100,7 @@ module Jekyll
 					local_config = YAML.load_file(config_file)
 				end
 			end
-			puts "**Returning (#{DEFAULT_METADATA.merge(site_metadata).merge(local_config)})**"
+			puts "inside get_album_metadata **Returning (#{DEFAULT_METADATA.merge(site_metadata).merge(local_config)})**"
 			return DEFAULT_METADATA.merge(site_metadata).merge(local_config)
 		end
 
@@ -154,7 +154,7 @@ module Jekyll
 		def image_page_url(filename)
 			return nil if filename == nil
 			ext = File.extname(filename)
-			puts "**Returning (#{File.basename(filename, ext)}_#{File.extname(filename)[1..-1]}.html)**"
+			puts "inside image_page_url **Returning (#{File.basename(filename, ext)}_#{File.extname(filename)[1..-1]}.html)**"
 			return "#{File.basename(filename, ext)}_#{File.extname(filename)[1..-1]}.html"
 		end
 	end
