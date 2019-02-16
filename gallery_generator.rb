@@ -28,7 +28,6 @@ module Jekyll
 		}
 
 		def initialize(site, base, dir, page=0)
-			puts "inside AlbumPage"
 			@site = site
 			@base = base # Absolute path to use to find files for generation
 			# Page will be created at www.mysite.com/#{dir}/#{name}
@@ -48,6 +47,7 @@ module Jekyll
 			self.data['albums'] = []
 			self.data['description'] = @album_metadata['description']
 			self.data['hidden'] = true if @album_metadata['hidden']
+			self.data['album_source'] = @album_source
 			puts "inside AlbumPage @self.data #{self.data}"
 			
 			files, directories = list_album_contents
@@ -63,6 +63,7 @@ module Jekyll
 
 			if page == 0
 				directories.each do |subalbum|
+				    puts "**send to AlbumPage(#{@site}, #{site.source}, #{File.join(@dir, subalbum)})**"
 					albumpage = AlbumPage.new(site, site.source, File.join(@dir, subalbum))
 					if !albumpage.data['hidden']
 						self.data['albums'] << { 'name' => subalbum, 'url' => albumpage.url }
@@ -75,6 +76,7 @@ module Jekyll
 				if num_images
 					next if idx < first
 					if idx >= last
+					puts "**send to AlbumPage(#{@site}, #{base}, #{dir}, #{page+1})**"
 						site.pages << AlbumPage.new(site, base, dir, page + 1)
 						break
 					end
@@ -83,6 +85,7 @@ module Jekyll
 				next_file = files[idx+1] || nil
 
 				album_page = "#{@dir}/#{album_name_from_page(page)}"
+				puts "**send to do_image(#{filename}, #{prev_file}, #{next_file}, #{album_page})**"
 				do_image(filename, prev_file, next_file, album_page)
 			end
 		end
@@ -96,6 +99,7 @@ module Jekyll
 					local_config = YAML.load_file(config_file)
 				end
 			end
+			puts "**Returning (#{DEFAULT_METADATA.merge(site_metadata).merge(local_config)})**"
 			return DEFAULT_METADATA.merge(site_metadata).merge(local_config)
 		end
 
@@ -140,7 +144,7 @@ module Jekyll
 			self.data['images'] << image_data
 
 			# Create image page
-			puts "send to ImagePage(#{@site}, #{@base}, #{@dir}, #{img_source},#{rel_link},#{image_page_url(prev_file)}, #{image_page_url(next_file)}, #{album_page})"
+			puts "**send to ImagePage(#{@site}, #{@base}, #{@dir}, #{img_source},#{rel_link},#{image_page_url(prev_file)}, #{image_page_url(next_file)}, #{album_page})**"
 			puts
 			site.pages << ImagePage.new(@site, @base, @dir, img_source,
 				rel_link, image_page_url(prev_file), image_page_url(next_file), album_page)
@@ -149,6 +153,7 @@ module Jekyll
 		def image_page_url(filename)
 			return nil if filename == nil
 			ext = File.extname(filename)
+			puts "**Returning (#{File.basename(filename, ext)}_#{File.extname(filename)[1..-1]}.html)**"
 			return "#{File.basename(filename, ext)}_#{File.extname(filename)[1..-1]}.html"
 		end
 	end
@@ -163,7 +168,7 @@ module Jekyll
 				albums.reject! { |x| x =~ /^\./ }
 				albums.select! { |x| File.directory? File.join(base_album_path, x) }
 				albums.each do |album|
-			        puts "send to AlbumPage(#{@site}, #{site.source}, #{album})"
+			        puts "**send to AlbumPage(#{@site}, #{site.source}, #{album})**"
 			        puts
 					site.pages << AlbumPage.new(site, site.source, album)
 				end
