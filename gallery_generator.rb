@@ -32,7 +32,7 @@ module Jekyll
 			# Page will be created at www.mysite.com/#{dir}/#{name}
 			@dir = dir
 			@name = album_name_from_page(page)
-			puts " #{@site} #{@base} #{@dir} #{@name}"
+			puts " @site #{@site} @base #{@base} @dir #{@dir} @name #{@name}"
 
 			@album_source = File.join(site.config['album_dir'] || 'albums', @dir)
 			@album_metadata = get_album_metadata
