@@ -2,7 +2,8 @@ module Jekyll
 	class ImagePage < Page
 		# An image page
 		def initialize(site, base, dir, img_source, name, prev_name, next_name, album_page)
-			puts "inside ImagePage @site #{@site} @base #{@base} @dir #{@dir} #{img_source}, #{name}, #{prev_name}, #{next_name}, #{album_page}"		
+		    puts "/////////////////////////////////ImagePage.initialize/////////////////////////////////////////////////////"
+			puts "inside ImagePage site:#{site} base:#{@base} @dir:#{dir} image_source:#{img_source}, name:#{name}, prev_name:#{prev_name}, next_name:#{next_name}, album_page:#{album_page}"		
 			@site = site
 			@base = base
 			@dir = dir
@@ -16,7 +17,7 @@ module Jekyll
 			self.data['prev_url'] = prev_name
 			self.data['next_url'] = next_name
 			self.data['album_url'] = album_page
-		    puts "inside ImagePage @self.data #{self.data}"
+		    puts "inside ImagePage @self.data:#{self.data}"
 		end
 	end
 
@@ -29,7 +30,7 @@ module Jekyll
 		}
 
 		def initialize(site, base, dir, page=0)
-		    puts "/////////////////////////////////AlbumPage.initialize/////////////////////////////////////////////////////"
+		    puts "//////////////////////////////AlbumPage.initialize\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"
 			puts "inside AlbumPage.initialize recved (site:#{site} base:#{base} dir:#{dir} page:#{page})"
 			@site = site
 			@base = base # Absolute path to use to find files for generation
@@ -66,12 +67,12 @@ module Jekyll
 
 			if page == 0
 				directories.each do |subalbum|
-				    puts "inside AlbumPage.initialize **send to AlbumPage(#{@site}, #{site.source}, #{File.join(@dir, subalbum)})**"
-					albumpage = AlbumPage.new(site, site.source, File.join(@dir, subalbum))
-					if !albumpage.data['hidden']
-						self.data['albums'] << { 'name' => subalbum, 'url' => albumpage.url }
-					end
-					site.pages << albumpage #FIXME: sub albums are getting included in my gallery index
+				   # puts "inside AlbumPage.initialize **send to AlbumPage(site:#{site}, site.source:#{site.source}, dir:#{File.join(@dir, subalbum)})**"
+				#	albumpage = AlbumPage.new(site, site.source, File.join(@dir, subalbum))
+				#	if !albumpage.data['hidden']
+				#		self.data['albums'] << { 'name' => subalbum, 'url' => albumpage.url }
+				#	end
+				#	site.pages << albumpage #FIXME: sub albums are getting included in my gallery index
 				end
 			end
 
@@ -91,6 +92,7 @@ module Jekyll
 				puts "inside AlbumPage.initialize **send to do_image(filename:#{filename}, prev_file:#{prev_file}, next_file:#{next_file}, album_page:#{album_page})**"
 				do_image(filename, prev_file, next_file, album_page)
 			end
+		puts "\\\\\\\\\\\\\\\\\\\\\\\\\\AlbumPage.initialize///////////////////"	
 		end
 
 		def get_album_metadata
