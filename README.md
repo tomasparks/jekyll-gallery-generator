@@ -10,35 +10,21 @@ create an album page for each directory.
 ## Installation
 
 So far Jekyll Gallery Generator requires Ruby, Jekyll,
-[minimagick](https://github.com/minimagick/minimagick),
-[jekyll-image-tag](https://github.com/robwierzbowski/jekyll-image-tag), and
-[ImageMagick](http://www.imagemagick.org/script/index.php).
+~~[minimagick](https://github.com/minimagick/minimagick),~~
+~~[jekyll-image-tag](https://github.com/robwierzbowski/jekyll-image-tag), and~~
+~~[ImageMagick](http://www.imagemagick.org/script/index.php)~~.
 
 In an upcoming release it will likely require
-[miniexiftool](https://github.com/janfri/mini_exiftool) as well.
+~~[miniexiftool](https://github.com/janfri/mini_exiftool) as well.~~
 
 Once you have the dependencies installed Just put `gallery_generator.rb` in the
 `_plugins` directory and `album_index.html` `image_page.html` in `_layouts` (or
 write your own templates). Put `album.css` in your `css` directory and import
 it into your main CSS file (or, again, write your own CSS).
 
-You'll need to include the following YAML snippet in your `_config.yml` for
+~~You'll need to include the following YAML snippet in your `_config.yml` for
 jekyll-image-tag to work, but don't actually *need* any further changes to
-`_config.yml`:
-
-```YAML
-image:
-    output: generated
-    presets:
-        album_thumb:
-            width: 200
-            attr:
-                class: album-image
-        medium:
-            width: 1200
-            attr:
-                class: image
-```
+`_config.yml`:~~
 
 Finally, put directories full of images in a directory called `"albums"` and
 build your site!
@@ -53,7 +39,7 @@ There are three parts to using the gallery generator:
 
 ### Configuration
 
-Your _config.py should specify `album_dir: some_directory`. If it does not,
+Your _config.yml should specify `album_dir: some_directory`. If it does not,
 `album_dir` defaults to `"albums"`.
 
 ### Directory Structure
