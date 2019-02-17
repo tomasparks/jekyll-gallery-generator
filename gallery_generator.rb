@@ -148,7 +148,7 @@ module Jekyll
 		     puts "-----------------------AlbumPage.do_image(#{filename}, #{prev_file}, #{next_file}, #{album_page})------------------"
 			# Get info for the album page and make the image's page.
 
-			rel_link = image_page_url(filename)
+			rel_link = "#{File.join(@album_source, image_page_url(filename))}"
 			img_source = "#{File.join(@album_source, filename)}"
 
 			image_data = {
