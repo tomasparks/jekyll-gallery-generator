@@ -78,9 +78,11 @@ module Jekyll
 			end
 
 			files.each_with_index do |filename, idx|
+			    puts "filename:#{filename}, idx:#{idx}"
 				if num_images
 					next if idx < first
 					if idx >= last
+					    puts "#{idx} >+ #{last}"
 					    puts "inside AlbumPage.initialize **send to AlbumPage(site:#{site}, base:#{base}, dir:#{dir}, page:#{page+1})**"
 						site.pages << AlbumPage.new(site, base, dir, page + 1)
 						break
@@ -160,11 +162,11 @@ module Jekyll
 			puts "**send to ImagePage(#{@site}, #{@base}, #{@dir}, #{img_source},#{rel_link},#{image_page_url(prev_file)}, #{image_page_url(next_file)}, #{album_page})**"
 			puts
 			site.pages << ImagePage.new(@site, @base, @dir, img_source,
-				rel_link, "#{@album_source}/#{image_page_url(prev_file)}", "#{@album_source}/#{image_page_url(next_file)}", album_page)
+				rel_link, image_page_url(prev_file), image_page_url(next_file), album_page)
 		end
 
 		def image_page_url(filename)
-			puts "-----------------------AlbumPage.image_page_url(filename)------------------"
+			puts "-----------------------AlbumPage.image_page_url(#{filename})------------------"
 			return nil if filename == nil
 			ext = File.extname(filename)
 			puts "inside image_page_url **Returning (#{File.basename(filename, ext)}_#{File.extname(filename)[1..-1]}.html)**"
