@@ -9,7 +9,7 @@ module Jekyll
 			@dir =  dir
 			@name = name # Name of the generated page
 			puts "inside ImagePage @site:#{@site} @base:#{@base} @dir:#{@dir} @name:#{@name}"
-			
+			           
 			self.process(@name)
 			self.read_yaml(File.join(@base, '_layouts'), 'image_page.html')
 			self.data['title'] = "#{File.basename(img_source)}"
@@ -17,6 +17,7 @@ module Jekyll
 			self.data['prev_url'] = prev_name
 			self.data['next_url'] = next_name
 			self.data['album_url'] = album_page
+			#self.data['dir'] = @dir
 		    puts "inside ImagePage self.data:#{self.data}"
 		end
 	end
@@ -148,19 +149,21 @@ module Jekyll
 		     puts "-----------------------AlbumPage.do_image(#{filename}, #{prev_file}, #{next_file}, #{album_page})------------------"
 			# Get info for the album page and make the image's page.
 
-			rel_link = "#{File.join(@album_source, image_page_url(filename))}"
+			rel_link = image_page_url(filename)
 			img_source = "#{File.join(@album_source, filename)}"
 
 			image_data = {
 				'src' => img_source,
-				'rel_link' => rel_link
+				'rel_link' => "/#{File.join(@album_source, image_page_url(filename))}"
 			}
 
 			self.data['images'] << image_data
 
 			# Create image page
-			puts "**send to ImagePage(#{@site}, #{@base}, #{@dir}, #{img_source},#{rel_link},#{image_page_url(prev_file)}, #{image_page_url(next_file)}, #{album_page})**"
-			puts
+			puts "**send to ImagePage(@site:#{@site}, @base:#{@base}, @dir:#{@dir}, #{img_source},#{rel_link},#{image_page_url(prev_file)}, #{image_page_url(next_file)}, #{album_page})**"
+			puts "calling function ImagePage (site:#{@site} base:#{@base} @dir:#{@dir} image_source:#{img_source}, name:#{rel_link}}, prev_name:#{image_page_url(prev_file)}, next_name:#{image_page_url(next_file)}, album_page:#{album_page}"		
+			
+			puts 
 			site.pages << ImagePage.new(@site, @base, @dir, img_source,
 				rel_link, image_page_url(prev_file), image_page_url(next_file), album_page)
 		end
