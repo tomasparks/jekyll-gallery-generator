@@ -2,8 +2,8 @@ module Jekyll
 	class ImagePage < Page
 		# An image page
 		def initialize(site, base, dir, img_source, name, prev_name, next_name, album_page)
-		    puts "/////////////////////////////////ImagePage.initialize/////////////////////////////////////////////////////"
-			puts "inside ImagePage base:#{base} @dir:#{dir} image_source:#{img_source}, name:#{name}, prev_name:#{prev_name}, next_name:#{next_name}, album_page:#{album_page}"		
+		    ##puts "/////////////////////////////////ImagePage.initialize/////////////////////////////////////////////////////"
+			##puts "inside ImagePage base:#{base} @dir:#{dir} image_source:#{img_source}, name:#{name}, prev_name:#{prev_name}, next_name:#{next_name}, album_page:#{album_page}"		
 			@site = site
 			@base = base
 			@dir =  dir
@@ -12,21 +12,21 @@ module Jekyll
 			self.process(@name)
 			
 			self.read_yaml(File.join(@base, '_layouts'), 'image_page.html')
-		    puts "inside ImagePage: Readed 'image_page.html' ...."
+		    ##puts "inside ImagePage: Readed 'image_page.html' ...."
 		    
 			self.data['img_src'] = img_source
 			self.data['prev_url'] = prev_name
 			self.data['next_url'] = next_name
 			self.data['album_url'] = album_page
 			
-			puts "inside ImagePage: self.data:#{self.data}"
+			##puts "inside ImagePage: self.data:#{self.data}"
 			
 			if File.exists? File.join(@dir, "#{File.basename(img_source,File.extname(File.basename(img_source)))}.yml")
 			
 			    # what is happening here?
-			    puts "inside ImagePage: Reading #{File.basename(img_source,File.extname(File.basename(img_source)))}.yml ...."
+			    ##puts "inside ImagePage: Reading #{File.basename(img_source,File.extname(File.basename(img_source)))}.yml ...."
 				image_data = YAML.load_file(File.join(@dir,"#{File.basename(img_source,File.extname(File.basename(img_source)))}.yml"))
-			    puts "inside ImagePage: Readed: image_data:#{image_data}"
+			    ##puts "inside ImagePage: Readed: image_data:#{image_data}"
 			    self.data['title'] = image_data['title'] || "#{img_source}"
 			    self.data['tags'] = image_data['tags'] || {}
 			    self.data['tag'] = image_data['tags'] || {}			    
@@ -34,9 +34,11 @@ module Jekyll
                 self.data['country'] = image_data['country'] || ""
                 self.data['artist'] = image_data['artist'] || ""
                 self.data['syndication'] = image_data['syndication'] || ""
+                self.data['video'] = image_data['video']
+                self.data['p-content'] = image_data['p-content']          
                 self.data['date'] = File.ctime("#{img_source}")
 			end
-			puts "inside ImagePage self.data:#{self.data}"
+			##puts "inside ImagePage self.data:#{self.data}"
 			#self.read_yaml(@dir,"#{File.basename(img_source,File.extname(File.basename(img_source)))}.yml")
 			#self.data['title'] = "#{File.basename(img_source)}"
 
@@ -74,6 +76,7 @@ module Jekyll
 			self.data['albums'] = []
 			self.data['description'] = @album_metadata['description']
 			self.data['hidden'] = true if @album_metadata['hidden']
+			self.data['image'] = @album_metadata['image']
 			self.data['album_source'] = @album_source
 			@dir = File.join(site.config['album_dir'] || 'albums', dir)
 			#puts "inside AlbumPage.initialize @self.data:#{self.data}"
@@ -91,10 +94,12 @@ module Jekyll
 
 			if page == 0
 				directories.each do |subalbum|
-				    #puts "inside AlbumPage.initialize **send to AlbumPage(site:#{site}, site.source:#{site.source}, dir:#{File.join(@dir, subalbum)})**"
+				    puts "inside AlbumPage.initialize **send to AlbumPage(site:#{site}, site.source:#{site.source}, dir:#{File.join(@dir, subalbum)})**"
 					albumpage = AlbumPage.new(site, site.source, File.join(dir, subalbum))
+					puts "albumpage: #{albumpage}\n"
 					if !albumpage.data['hidden']
 						self.data['albums'] << { 'name' => subalbum, 'url' => albumpage.url }
+						puts "self.data['albums']: #{self.data['albums']}\n"
 					end
 					site.pages << albumpage #FIXME: sub albums are getting included in my gallery index
 				end
