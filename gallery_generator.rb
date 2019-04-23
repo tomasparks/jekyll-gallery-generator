@@ -78,11 +78,12 @@ module Jekyll
 			self.data['hidden'] = true if @album_metadata['hidden']
 			puts "@album_metadata: #{@album_metadata}\n\n"
 			puts "@album_metadata['image']: #{@album_metadata['image']}\n\n"
-			if !@album_metadata['image'] == nil
-			  puts "!@album_metadata['image'] == nill \n\n"
-			  puts "#{File.join(@album_source, @album_metadata['image'])}\n\n"
-			  self.data['image'] = "#{File.join(@album_source, @album_metadata['image'])}"
-			end
+			#if !@album_metadata['image'] == nil
+			  #puts "!@album_metadata['image'] == nill \n\n"
+			  puts "File.join(@album_source, #{@album_metadata['image']})\n\n"
+			  self.data['image'] = "File.join(@album_source, #{@album_metadata['image']})"
+			  puts "#{@self.data['image']}
+			#end
 
 			
 			self.data['album_source'] = @album_source
