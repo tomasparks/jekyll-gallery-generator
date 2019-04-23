@@ -1,3 +1,4 @@
+require 'digest'
 module Jekyll
 	class ImagePage < Page
 		# An image page
@@ -197,6 +198,7 @@ module Jekyll
 			image_data = {
 				'src' => img_source,
 				'rel_link' => "/#{File.join(@album_source, image_page_url(filename))}"
+				'sha256' => "#{Digest::SHA256.hexdigest(File.read(File.join(@album_source, image_page_url(filename))))}"
 			}
 
 			self.data['images'] << image_data
