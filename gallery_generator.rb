@@ -84,6 +84,7 @@ module Jekyll
 			unless @album_metadata['image'].nil?
 			    puts "@album_metadata['image']: #{@album_metadata['image']}  != nill \n\n"
 			    puts " #{File.join(@album_source, @album_metadata['image'])} \n\n"
+			    self.data['image'] = "#{File.join(@album_source, @album_metadata['image'])}"
 			end
 			#  puts "File.join(@album_source, #{@album_metadata['image']})\n\n"
 			 # self.data['image'] = "File.join(@album_source, #{@album_metadata['image']})"
@@ -112,9 +113,10 @@ module Jekyll
 					albumpage = AlbumPage.new(site, site.source, File.join(dir, subalbum))
 					puts "albumpage.data: #{albumpage.data}\n"
 					if !albumpage.data['hidden']
-						self.data['albums'] << { 'name' => subalbum, 'url' => albumpage.url, 'image' => albumpage.data['image'] }
+						self.data['albums'] << { 'name' => subalbum, 'url' => albumpage.url, 'image' => @albumpage.data['image'] }
 						puts "self.data['albums']: #{self.data['albums']}\n"
 					end
+					
 					site.pages << albumpage #FIXME: sub albums are getting included in my gallery index
 				end
 			end
