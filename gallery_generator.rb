@@ -201,7 +201,7 @@ module Jekyll
             
 			image_data = {
 				'src' => img_source,
-				'rel_link' => "/#{File.join(@album_source, image_page_url(filename))}"
+				'rel_link' => "/#{File.join(@album_source, image_page_url(filename))}",
 				'sha256' => "#{Digest::SHA256.hexdigest(File.read(img_source))}"
 			}
 
