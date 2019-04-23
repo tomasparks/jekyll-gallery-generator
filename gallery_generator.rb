@@ -76,7 +76,7 @@ module Jekyll
 			self.data['albums'] = []
 			self.data['description'] = @album_metadata['description']
 			self.data['hidden'] = true if @album_metadata['hidden']
-			self.data['image'] = @album_metadata['image']
+			self.data['image'] = @album_metadata['image'] || ""
 			self.data['album_source'] = @album_source
 			@dir = File.join(site.config['album_dir'] || 'albums', dir)
 			#puts "inside AlbumPage.initialize @self.data:#{self.data}"
@@ -96,9 +96,9 @@ module Jekyll
 				directories.each do |subalbum|
 				    puts "inside AlbumPage.initialize **send to AlbumPage(site:#{site}, site.source:#{site.source}, dir:#{File.join(@dir, subalbum)})**"
 					albumpage = AlbumPage.new(site, site.source, File.join(dir, subalbum))
-					puts "albumpage: #{albumpage}\n"
+					#puts "albumpage: #{albumpage}\n"
 					if !albumpage.data['hidden']
-						self.data['albums'] << { 'name' => subalbum, 'url' => albumpage.url }
+						self.data['albums'] << { 'name' => subalbum, 'url' => albumpage.url, 'image' => albumpage.image }
 						puts "self.data['albums']: #{self.data['albums']}\n"
 					end
 					site.pages << albumpage #FIXME: sub albums are getting included in my gallery index
