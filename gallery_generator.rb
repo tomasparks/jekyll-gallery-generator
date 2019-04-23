@@ -189,16 +189,19 @@ module Jekyll
 		end
 
 		def do_image(filename, prev_file, next_file, album_page)
-		     #puts "-----------------------AlbumPage.do_image(#{filename}, #{prev_file}, #{next_file}, #{album_page})------------------"
+		     puts "-----------------------AlbumPage.do_image(#{filename}, #{prev_file}, #{next_file}, #{album_page})------------------"
 			# Get info for the album page and make the image's page.
 
 			rel_link = image_page_url(filename)
 			img_source = "#{File.join(@album_source, filename)}"
-
+            puts "img_source: #{img_source}\n"
+            puts "#{Digest::SHA256.hexdigest(img_source)}\n"
+            
 			image_data = {
 				'src' => img_source,
 				'rel_link' => "/#{File.join(@album_source, image_page_url(filename))}"
-				'sha256' => "#{Digest::SHA256.hexdigest(File.read(File.join(@album_source, image_page_url(filename))))}"
+				
+				#'sha256' => "#{Digest::SHA256.hexdigest(File.read(File.join(@album_source, image_page_url(filename))))}"
 			}
 
 			self.data['images'] << image_data
