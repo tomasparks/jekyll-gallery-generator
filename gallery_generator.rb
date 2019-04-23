@@ -76,7 +76,8 @@ module Jekyll
 			self.data['albums'] = []
 			self.data['description'] = @album_metadata['description']
 			self.data['hidden'] = true if @album_metadata['hidden']
-			self.data['image'] = @album_metadata['image']
+			puts "#{File.join(@album_source, @album_metadata['image'])}\n\n"
+			self.data['image'] = "#{File.join(@album_source, @album_metadata['image'])}"
 			
 			self.data['album_source'] = @album_source
 			@dir = File.join(site.config['album_dir'] || 'albums', dir)
