@@ -81,6 +81,10 @@ module Jekyll
 			if @album_metadata['image'].nil? 
 			  puts "@album_metadata['image']: #{@album_metadata['image']}  == nill \n\n"
 			end
+			unless @album_metadata['image'].nil?
+			    puts "@album_metadata['image']: #{@album_metadata['image']}  != nill \n\n"
+			    puts "File.join(@album_source, #{@album_metadata['image']})\n\n"
+			end
 			#  puts "File.join(@album_source, #{@album_metadata['image']})\n\n"
 			 # self.data['image'] = "File.join(@album_source, #{@album_metadata['image']})"
 			 # puts "@self.data['image']: #{@self.data['image']}\n\n"
