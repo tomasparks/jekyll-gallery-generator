@@ -98,7 +98,7 @@ module Jekyll
 					albumpage = AlbumPage.new(site, site.source, File.join(dir, subalbum))
 					puts "albumpage.data: #{albumpage.data}\n"
 					if !albumpage.data['hidden']
-						self.data['albums'] << { 'name' => subalbum, 'url' => albumpage.url, 'image' => "#{albumpage.data['image']}" }
+						self.data['albums'] << { 'name' => subalbum, 'url' => albumpage.url, 'image' => albumpage.data['image'] }
 						puts "self.data['albums']: #{self.data['albums']}\n"
 					end
 					site.pages << albumpage #FIXME: sub albums are getting included in my gallery index
