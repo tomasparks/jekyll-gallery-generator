@@ -1,4 +1,5 @@
 require 'digest'
+
 module Jekyll
 	class ImagePage < Page
 		# An image page
@@ -195,7 +196,8 @@ module Jekyll
 			rel_link = image_page_url(filename)
 			img_source = "#{File.join(@album_source, filename)}"
             puts "img_source: #{img_source}\n"
-            puts "#{Digest::SHA256.hexdigest(img_source)}\n"
+            puts "Digest::SHA256.hexdigest(img_source): #{Digest::SHA256.hexdigest(img_source)}\n"
+            puts "Digest::SHA256.hexdigest(File.read(img_source)): #{Digest::SHA256.hexdigest(File.read(img_source))}\n"            
             
 			image_data = {
 				'src' => img_source,
