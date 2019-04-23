@@ -76,7 +76,7 @@ module Jekyll
 			self.data['albums'] = []
 			self.data['description'] = @album_metadata['description']
 			self.data['hidden'] = true if @album_metadata['hidden']
-			self.data['image'] = @album_metadata['image']
+			self.data['image'] = @album_metadata['image'] || nil
 			self.data['album_source'] = @album_source
 			@dir = File.join(site.config['album_dir'] || 'albums', dir)
 			#puts "inside AlbumPage.initialize @self.data:#{self.data}"
