@@ -38,7 +38,8 @@ module Jekyll
                 self.data['syndication'] = image_data['syndication'] || ""
                 self.data['video'] = image_data['video']
                 self.data['p-content'] = image_data['p-content']          
-                self.data['date'] = File.ctime("#{img_source}")
+                self.data['date'] = image_data['date']  || File.ctime("#{img_source}")
+                self.data['redirect_from']  = "#{Digest::SHA256.hexdigest(File.read(img_source))}.html"
 			end
 			##puts "inside ImagePage self.data:#{self.data}"
 			#self.read_yaml(@dir,"#{File.basename(img_source,File.extname(File.basename(img_source)))}.yml")
