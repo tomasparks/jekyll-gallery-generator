@@ -244,6 +244,9 @@ module Jekyll
 				end
 				site.pages.each do |page|
 				   puts "#{page}: #{page.data}\n"
+				   unless page.data.tags.nil?
+				     puts "#{page.data.tags}\n "
+				   end
 				   # page.data.tags.each do |tag|
 				    #    puts "#{tag}, "
                        # lang = post.data['lang'].to_s
