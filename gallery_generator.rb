@@ -30,7 +30,7 @@ module Jekyll
 				image_data = YAML.load_file(File.join(@dir,"#{File.basename(img_source,File.extname(File.basename(img_source)))}.yml"))
 			    ##puts "inside ImagePage: Readed: image_data:#{image_data}"
 			    self.data['title'] = image_data['title'] || "#{img_source}"
-			    self.data['to-tags'] = image_data['tags'] || {}		    
+			    self.data['todotags'] = image_data['tags'] || {}		    
                 self.data['year'] = image_data['year'] || 0
                 self.data['country'] = image_data['country'] || ""
                 self.data['artist'] = image_data['artist'] || ""
@@ -243,7 +243,7 @@ module Jekyll
 				end
 				site.pages.each do |page|
 				   puts "page.data: #{page.data}\n"
-				   puts "page.data.['to-tags']: #{page.data.to-tags}\n"
+				   puts "page.data.['todotags']: #{page.data.todotags}\n"
 				  # data = page.data
 				   #unless page.data.tags.nil?
 				   #  puts "#{page.data.tags.to_s}, \n "
