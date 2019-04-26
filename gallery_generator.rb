@@ -245,9 +245,11 @@ module Jekyll
 				   puts "page.data: #{page.data}\n"
 				   #puts "page.data.['tags']: #{page.data.tags}\n"
 				   tags = page.data['tags']
+				   puts "tags: #{tags} \n"
 				   unless tags.nil?
-				    print tags
-				    puts "\n"
+                       tags.each do |tag|
+                       puts "(loop) tag: #{tag} \n"
+                       end
 				   end
 				   # page.data.tags.each do |tag|
 				    #    puts "#{tag}, "
