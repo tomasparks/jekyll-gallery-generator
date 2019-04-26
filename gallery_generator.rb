@@ -242,9 +242,10 @@ module Jekyll
 					site.pages << AlbumPage.new(site, site.source, album)
                     puts "-----------------------------------------------------------------------"
 				end
-				site.pages.each do |page|
-				   puts "page.data: #{page.data}\n"
+				#site.pages.each do |page|
+				 #  puts "page.data: #{page.data}\n"
 				   #puts "page.data.['tags']: #{page.data.['tags']}\n"
+				  # data = page.data
 				   #unless page.data.tags.nil?
 				   #  puts "#{page.data.tags.to_s}, \n "
 				   #end
@@ -254,7 +255,7 @@ module Jekyll
                        # site.tags[lang] ||= []
                        # site.tags[lang] << page
                    # end
-                    puts "\n"
+                   # puts "\n"
                end
 			end
 		end
