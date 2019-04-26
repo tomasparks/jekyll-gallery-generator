@@ -245,7 +245,7 @@ module Jekyll
 				   puts "page.data: #{page.data}\n"
 				   #puts "page.data.['tags']: #{page.data.tags}\n"
 				   #data = page.data
-				   unless page.data.tags.nil?
+				   unless page.data.tags.empty?
 				    print page.data.tags
 				    puts "\n"
 				   end
