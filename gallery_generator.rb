@@ -241,6 +241,7 @@ module Jekyll
 					site.pages << AlbumPage.new(site, site.source, album)
                     puts "-----------------------------------------------------------------------"
 				end
+				puts "site.tags #{site.tags} \n";
 				site.pages.each do |page|
 				   puts "page.data: #{page.data}\n"
 				   #puts "page.data.['tags']: #{page.data.tags}\n"
@@ -249,16 +250,12 @@ module Jekyll
 				   unless tags.nil?
                        tags.each do |tag|
                        puts "(loop) tag: #{tag} \n"
-                       end
-				   end
-				   # page.data.tags.each do |tag|
-				    #    puts "#{tag}, "
-                       # lang = post.data['lang'].to_s
-                       # site.tags[lang] ||= []
-                       # site.tags[lang] << page
-                   # end
+                       #site.tags['#{tag}'] << page
+                       end # do tags
+				   end # unless
                     puts "\n"
-               end
+               end # do pages
+              puts "site.tags #{site.tags} \n";
 			end
 		end
 	end
