@@ -244,9 +244,9 @@ module Jekyll
 				site.pages.each do |page|
 				   puts "page.data: #{page.data}\n"
 				   #puts "page.data.['tags']: #{page.data.tags}\n"
-				   #data = page.data
-				   unless page.data.tags.empty?
-				    print page.data.tags
+				   tags = page.data['tags']
+				   unless tags.nill?
+				    print tags
 				    puts "\n"
 				   end
 				   # page.data.tags.each do |tag|
