@@ -243,13 +243,13 @@ module Jekyll
                     puts "-----------------------------------------------------------------------"
 				end
 				site.pages.each do |page|
-				   puts "#{page}: \n"
-				    page.data.tags.each do |tag|
-				        puts "#{tag}, "
+				   puts "#{page}: #{page.data}\n"
+				   # page.data.tags.each do |tag|
+				    #    puts "#{tag}, "
                        # lang = post.data['lang'].to_s
                        # site.tags[lang] ||= []
                        # site.tags[lang] << page
-                    end
+                   # end
                     puts "\n"
                end
 			end
