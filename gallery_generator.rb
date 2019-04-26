@@ -30,8 +30,7 @@ module Jekyll
 				image_data = YAML.load_file(File.join(@dir,"#{File.basename(img_source,File.extname(File.basename(img_source)))}.yml"))
 			    ##puts "inside ImagePage: Readed: image_data:#{image_data}"
 			    self.data['title'] = image_data['title'] || "#{img_source}"
-			    self.data['tags'] = image_data['tags'] || {}
-			    self.data['tag'] = image_data['tags'] || {}			    
+			    self.data['to-tags'] = image_data['tags'] || {}		    
                 self.data['year'] = image_data['year'] || 0
                 self.data['country'] = image_data['country'] || ""
                 self.data['artist'] = image_data['artist'] || ""
