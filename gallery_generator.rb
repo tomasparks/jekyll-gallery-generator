@@ -255,7 +255,7 @@ module Jekyll
                        # site.tags[lang] << page
                    # end
                    # puts "\n"
-               end
+               #end
 			end
 		end
 	end
