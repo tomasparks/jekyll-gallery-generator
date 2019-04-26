@@ -245,9 +245,9 @@ module Jekyll
 				   puts "page.data: #{page.data}\n"
 				   #puts "page.data.['todotags']: #{page.data.todotags}\n"
 				  # data = page.data
-				   unless page.data.tags.nil?
-				     puts "#{page.data.tags.keys.inspect}, \n "
-				   end
+				   #unless page.data.tags.nil?
+				    # puts "#{page.data.tags.keys.inspect}, \n "
+				   #end
 				   # page.data.tags.each do |tag|
 				    #    puts "#{tag}, "
                        # lang = post.data['lang'].to_s
