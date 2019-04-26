@@ -38,7 +38,7 @@ module Jekyll
                 self.data['video'] = image_data['video']
                 self.data['p-content'] = image_data['p-content']          
                 self.data['date'] = image_data['date']  || File.ctime("#{img_source}")
-                self.data['redirect_from']  = "#{Digest::SHA256.hexdigest(File.read(img_source))}.html"
+                self.data['redirect_from'] = "#{Digest::SHA256.hexdigest(File.read(img_source))}.html"
 			end
 			##puts "inside ImagePage self.data:#{self.data}"
 			#self.read_yaml(@dir,"#{File.basename(img_source,File.extname(File.basename(img_source)))}.yml")
@@ -245,7 +245,7 @@ module Jekyll
 				   puts "page.data: #{page.data}\n"
 				   #puts "page.data.['tags']: #{page.data.tags}\n"
 				   tags = page.data['tags']
-				   unless tags.nill?
+				   unless tags.nil?
 				    print tags
 				    puts "\n"
 				   end
