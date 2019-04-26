@@ -250,7 +250,7 @@ module Jekyll
 				   unless tags.nil?
                        tags.each do |tag|
                        puts "(loop) tag: #{tag} \n"
-                       #site.tags['#{tag}'] << page
+                       site.tags['#{tag}'] << page
                        end # do tags
 				   end # unless
                     puts "\n"
