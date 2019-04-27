@@ -255,7 +255,7 @@ module Jekyll
 				   end # unless
                     #puts "\n"
                end # do pages
-              puts "site.tags #{site.tags} \n";
+              puts "site.tags #{@site.tags} \n";
 			end
 		end
 	end
