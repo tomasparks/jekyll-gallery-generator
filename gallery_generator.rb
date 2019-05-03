@@ -242,20 +242,20 @@ module Jekyll
                     #puts "-----------------------------------------------------------------------"
 				end
 				#puts "site.tags #{site.tags} \n";
-				site.pages.each do |page|
+				#site.pages.each do |page|
 				   #puts "page.data: #{page.data}\n"
 				   ##puts "page.data.['tags']: #{page.data.tags}\n"
-				   tags = page.data['tags']
+				   #tags = page.data['tags']
 				   #puts "tags: #{tags} \n"
-				   unless tags.nil?
-                       tags.each do |tag|
+				   #unless tags.nil?
+                    #   tags.each do |tag|
                        #puts "(loop) tag: #{tag} \n"
-                       site.tags['#{tag}'] << page
-                       end # do tags
-				   end # unless
+                     #  site.tags['#{tag}'] << page
+                 #      end # do tags
+				#   end # unless
                     #puts "\n"
-               end # do pages
-              puts "site.tags #{site.['tags']} \n";
+               #end # do pages
+              #puts "site.tags #{site.['tags']} \n";
 			end
 		end
 	end
